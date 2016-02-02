@@ -41,5 +41,7 @@ int main(void) {
    for (list<int>::iterator itr=mylist.begin(); itr!=mylist.end(); ++itr)
       cout << *itr << " ";
    cout << endl;
+
+   return 0;
 }
 

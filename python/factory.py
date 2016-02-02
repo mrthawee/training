@@ -1,0 +1,28 @@
+class Dog:
+   """ A simple dog class """
+
+   def __init__(self, name):
+      self._name = name
+
+   def speak(self):
+      return "Woof!"
+
+class Cat:
+   """ cat class """
+   def __init__(self, name):
+      self._name = name
+
+   def speak(self):
+      return "Meow!"
+
+def get_pet(pet="dog"): '''default to dog'''
+   """ The factory method to create animal """
+   pets = dict(dog=Dog("Hope"), cat=Cat("Peace"))
+
+   return pets[pet]
+
+d = get_pet("dog")
+print(d.speak())
+
+c = get_pet("cat")
+print(c.speak())

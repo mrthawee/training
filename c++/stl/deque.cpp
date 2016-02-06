@@ -15,6 +15,12 @@ void dump(deque<int> d) {
    for (auto it: d)
       cout << it << " ";
    cout << endl;
+   // or using the basic iterator going through the deque as below
+   /*
+   for(deque<int>::iterator itr=d.begin(); itr!=d.end(); ++itr)
+      cout << *itr << " ";
+   cout << endl;
+   */
 }
 
 int main(void) {

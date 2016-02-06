@@ -24,20 +24,32 @@ int main(void) {
    cout << endl;
 
    // the right way to access
+   // 1. faster than random  access
+   // 2. same syntax for other containers such as deque, list
    for (vector<int>::iterator itr=vec.begin(); itr!=vec.end(); ++itr)
       cout << *itr << " ";
    cout << endl;
 
+   //for (it: vec)  // c++ 11
+   /*
    for (auto it: vec)  // c++ 11
       cout << it << " ";
    cout << endl;
+   */
 
    // vector is a dynamically allocated contiguous array in memory
+   int* p = &vec[0]; 
+   p[1] = 6;
+   for (vector<int>::iterator itr=vec.begin(); itr!=vec.end(); ++itr)
+      cout << *itr << " ";
+   cout << endl;
 
    // common member functions of all containers
    // vec: {4, 1, 8}
    if (vec.empty()) 
       cout << "Not possible.\n";
+   else 
+      cout << "yes, I am empty\n";
 
    cout << vec.size();  // 3
    vector<int> vec2(vec);  // copy constructor, vec2: {4, 1, 8}

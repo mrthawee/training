@@ -1,0 +1,30 @@
+/*
+ * Container Adaptor
+ * - Provide a restricted interface to meet special needs
+ * - Implemented with fundamental container classes
+ *
+ * 1. stack: LIFO, push(), pop(), top()
+ *
+ * 2. queue: FIFO, push(), pop(), front(), back()
+ *
+ * 3. priority queue: first item always has the greatest priority
+ *                 push(), pop(), top()
+ *
+ * Another way of categorizing containers:
+ *
+ * 1. Array based containers: vector, deque
+ *
+ * 2. Node based containers: list + associative containers + unordered containers
+ *
+ * Array based containers invalidates pointers:
+ * - Native pointers, iterators, references
+ *
+ */
+
+vector<int> vec = { 1, 2, 3, 4 };
+int* p = &vec[2]; //p points to 3
+vec.insert(vec.begin(), 0);  // vector is updated
+cout << *p << endl;  // Unknown!!! -> BAD!!!
+
+// So, don't use pointer with array based containers (vector, deque), but node based are fine!
+

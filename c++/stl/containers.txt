@@ -2,12 +2,15 @@
  *
  * 1 Sequence containters (array and linked list):
  * - vector, deque, list, forward list, array
- * 2 Associate containters( binary tree):
- * - set, multiset
- * - map, multimap
+ *
+ * 2 Associate containters( binary tree):  // set and map are always sorted!
+ * - set(no value dup), multiset (dup ok)
+ * - map(no key dup, multimap (dup ok)
+ *
  * 3 Unordered containers (hash table)
  * - unordered set/multiset
  * - unordered map/multimap
+ *
  */
 
 /*
@@ -19,8 +22,8 @@
 #include <list>
 #include <set>  // set and multiset
 #include <map>  // map and multimap
-#include <unordered_set>
-#include <unordered_map>
+#include <unordered_set>  // unordered set/multiset
+#include <unordered_map>  // unordered map/multimap
 #include <iterator>
 #include <algorithm>
 #include <numeric>  // some numeric algorithm

@@ -39,8 +39,14 @@ int main(void) {
    mylist.erase(itr);    // mylist : {4,8,5,2,6} : O(1)
    dump(mylist);
 
+   cout << "for loop with basic iterator: ";
    for (list<int>::iterator itr=mylist.begin(); itr!=mylist.end(); ++itr)
       cout << *itr << " ";
+   cout << endl;
+
+   cout << "for loop with iterator in c++11 style: ";
+   for (auto ir: mylist)
+      cout << ir << " ";
    cout << endl;
 
    return 0;

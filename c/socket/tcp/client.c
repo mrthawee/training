@@ -7,11 +7,20 @@
       => Send and receive data, use the read() and write() system calls
 
 */
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<sys/types.h>
+#include<sys/socket.h>
+#include<netinet/in.h>
+
+/*
 #include
 #include
 #include
 #include
 #include  
+*/
 
 void error(char *msg)
 {
@@ -27,32 +36,32 @@ int main(int argc, char *argv[])
     char buffer[256];
     if (argc &lt; 3)
     {
-       fprintf(stderr,&quot;usage %s hostname port\n&quot;, argv[0]);
+       fprintf(stderr,"usage %s hostname port\n" argv[0]);
        exit(0);
     }
     portno = atoi(argv[2]);
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (sockfd h_addr,(char *)&amp;serv_addr.sin_addr.s_addr,server-&gt;h_length);
+    if (sockfd h_addr,(char *)&serv_addr.sin_addr.s_addr,server)> h_length);
     serv_addr.sin_port = htons(portno);
-    if (connect(sockfd,&amp;serv_addr,sizeof(serv_addr)) &lt; 0)
+    if (connect(sockfd,&serv_addr,sizeof(serv_addr)) < 0)
     {
-          error(&quot;ERROR connecting&quot;);
+          error("ERROR connecting");
     }
-    printf(&quot;Please enter the message: &quot;);
+    printf("Please enter the message: ");
     bzero(buffer,256);
     fgets(buffer,255,stdin);
     n = write(sockfd,buffer,strlen(buffer));
-    if (n &lt; 0)
+    if (n < 0)
     {
-           error(&quot;ERROR writing to socket&quot;);
+           error("ERROR writing to socket");
     }
     bzero(buffer,256);
     n = read(sockfd,buffer,255);
-    if (n &lt; 0)
+    if (n < 0)
     {
-           error(&quot;ERROR reading from socket&quot;);
+           error("ERROR reading from socket");
     }
-    printf(&quot;%s\n&quot;,buffer);
+    printf("%s\n",buffer);
     return 0;
 }
 

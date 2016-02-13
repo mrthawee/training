@@ -1,0 +1,5 @@
+ulimit -c unlimited
+ulimit -a
+
+limit core u 
+limit core 0

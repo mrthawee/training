@@ -1,0 +1,2 @@
+# www.cs.colby.edu/maxwell/courses/tutorials/maketutor
+gcc -o hellomake hellomake.c hellofunc.c -I.

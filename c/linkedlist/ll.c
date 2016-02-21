@@ -1,252 +1,322 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
-struct Node {
+struct node {
    int data;
-   struct Node* next;
+   struct node *next;
 };
 
-struct Node* head;
+struct node* BuildOneTwoThree() {
+   struct node *one, *two, *three;
 
-void PrintList() {
-   int i=0;
+   one = (struct node*)malloc(sizeof(struct node));
+   two = (struct node*)malloc(sizeof(struct node));
+   three = (struct node*)malloc(sizeof(struct node));
 
-   struct Node* tmp = head;
+   assert(one != NULL);
+   assert(two != NULL);
+   assert(three != NULL);
 
-   printf("List: ");
+   one->data = 1;
+   one->next = two;
+   two->data = 2;
+   two->next = three;
+   three->data = 3;
+   three->next = NULL;
 
-   while (tmp != NULL) {
-      printf("%d", tmp->data);
-      tmp = tmp->next;
-      if (tmp != NULL) {
-         printf(", ");
-      }
-   }
-
-   printf(" <eol>\n");
+   return one;
 }
 
-void PrintListRecursive(struct Node* head) {
-   // if (head == NULL) {
-   if (!head) {
-      printf("<eol>\n");
-      return;
-   }
-   printf("%d ", head->data);
-   PrintListRecursive(head->next);
-}
-
-void PrintReversedListRecursive(struct Node* head) {
-   if (!head) {
-      printf("<eol> ");
-      return;
-   }
-   PrintReversedListRecursive(head->next);
-   printf("%d ", head->data);  // just print after the stack is popping
-}
-
-/* data : value to be inserted
-   posN : position n(th) to be inserted (start from 1)
-*/
-void InsertNode(int data, int posN) {
-   struct Node* tmp = (struct Node*)malloc(sizeof(struct Node*));
-   // Node* tmp = new Node(); // in C++
-
-   int i=0;
-   struct Node* tmp2 = NULL;
-
-   tmp->data = data;
-   tmp->next = NULL;
-
-   // posN = 1 : the beginning for the list
-   if (posN == 1) {
-      tmp->next = head;
-      head = tmp;
-   } else {
-      tmp2 = head;
-      for (i=0; i<posN-2; i++) {
-         tmp2 = tmp2->next;
-      }
-      tmp->next = tmp2->next;
-      tmp2->next = tmp;
-   }
-
-   PrintList();
-}
-
-void DeleteNode(int data) {
-   struct Node* tmp = head;
-   struct Node* tmp2 = NULL;
-
-   if (head->data == data) {
-      tmp = head;
+int Length(struct node *head) {
+   int cnt = 0;
+   while (head != NULL) {
+      cnt++;
       head = head->next;
-      free(tmp);
-   } else {
-      tmp = head;
-      while (tmp->next->data != data) {
-         tmp = tmp->next;
-      }
-     
-      tmp2 = tmp->next;
-      tmp->next = tmp->next->next;
-      free(tmp2);
-   } 
-
-   PrintList();
+   }
+   return cnt;
 }
 
-void DeleteNode2(int data) {
-   struct Node* tmp = head;
-   struct Node* tmp2 = NULL;
+void Print(struct node *head) {
+   struct node *curr = head;
+   while (curr != NULL) {
+      printf("%d ", curr->data);
+      curr = curr->next;
+   }
+   printf("\n");
+}
 
+void Push(struct node **headRef, int newData) {
+   struct node *head = *headRef;
+   struct node *n = (struct node*)malloc(sizeof(struct node));
+   n->data = newData;
+   n->next = head; 
+
+   head = n;
+   *headRef = head;  // Update the "head" of caller function
+}
+
+// nth : 0 to Lenght-1
+int GetNth(struct node *head, int nth) {
+   int i;
+   for (i=0; i<nth; i++)
+      head = head->next;
+   return head->data;
+}
+
+void DeleteList(struct node **headRef) {
+   struct node *head = *headRef;
+   struct node *curr = head;
+   while (curr != NULL) {
+      head = curr->next;
+      free(curr);
+      curr = head;
+   }
+   *headRef = head;
+}
+
+int Pop(struct node **headRef) {
+   struct node *head = *headRef;
+   struct node *curr = head;
+   int data = -1;
    if (head == NULL) {
-      printf ("List is empty! Nothing to be deleted.\n");
+      printf("Pop: found head is NULL\n");
    } else {
-      if (head->data == data) {
-         tmp = head;
-         head = head->next;
-         free(tmp);
-      } else {
-         tmp = head;
-         while (tmp->next->data != data) {
-            tmp = tmp->next;
-            if (tmp->next == NULL) {
-               printf ("End of List! Nothing to be deleted.\n");
-               return;
-            }
-         }
-     
-         tmp2 = tmp->next;
-         tmp->next = tmp->next->next;
-         free(tmp2);
-      }
-   } 
+      data = curr->data;
+      head = curr->next;
+      free(curr);
+      *headRef = head;
+   }
 
-   PrintList();
+   return data;
+}
+      
+void InsertNth(struct node **headRef, int idx, int v) {
+   struct node *head = *headRef;
+   struct node *curr = head;
+
+   struct node *n = (struct node*)malloc(sizeof(struct node));
+   n->data = v;
+//   n->next = NULL;
+
+   if (idx > 0) {
+      while (idx-1 > 0) {
+         curr = curr->next;
+         idx--;
+      }
+      n->next = curr->next; 
+      curr->next = n;
+   } else {
+      n->next = head; 
+      head = n;
+   }
+
+   *headRef = head;  // Update the "head" of caller function
 }
 
+void SortedInsert(struct node **headRef, struct node *newNode) {
 /*
-Step 1: set curr to head
- prev head,curr
-  |    |
- NULL [0]->[1]->[2]->NULL
+   struct node **currRef = headRef;
 
-Step 2: move head to head->next
- prev curr head
-  |    |    |
- NULL [0]->[1]->[2]->NULL
+   while (*currRef != NULL && (*currRef)->data < newNode->data) {
+      currRef = &((*currRef)->next);
+   }
 
-Step 3: point curr to prev
- prev curr head
-  |    |    |
- NULL<-[0] [1]->[2]->NULL
-
-Step 4: move prev to curr
-  prev,curr head
-        |    |
- NULL<-[0]  [1]->[2]->NULL
-
-Step 5: move curr to new head
-       prev head,curr
-        |     |
- NULL<-[0]   [1]->[2]->NULL
+   newNode->next = *currRef;
+   *currRef = newNode;
 */
-void ReverseList() {
-   struct Node* prev = NULL;
-   struct Node* curr = head;
+   // Insert to the front for current head
+   if (*headRef == NULL || (*headRef)->data >= newNode->data) {
+      newNode->next = *headRef;
+      *headRef = newNode;
+   } else { // Insert to elsewhere (non-head)
+      // Locate the node before the point of insertion
+      struct node *curr = *headRef;
+      while (curr->next != NULL && curr->next->data < newNode->data) {
+         curr = curr->next;
+      }
+      newNode->next = curr->next;
+      curr->next = newNode;
+   }
+}
 
-   while (head->next != NULL) {
+void InsertSort(struct node **headRef) {
+   struct node *newHead = NULL;
+   struct node *curr = *headRef;
+   struct node *next;
+
+   while (curr != NULL) {
+      next = curr->next;
+      SortedInsert(&newHead, curr);
+//      Print(newHead);
+      curr = next;
+   }
+
+   *headRef = newHead;
+}
+
+void Append(struct node **aRef, struct node **bRef) {
+   if (*aRef == NULL) {
+      *aRef = *bRef;
+   } else {
+/* Can't move with (*aRef) directly because it will change the head of aRef 
+      while ((*aRef)->next != NULL) {
+         (*aRef) = (*aRef)->next;
+      }
+      (*aRef)->next = *bRef;
+*/
+      // Create 'curr' local variable to point to head of aRef
+      // And travel with curr, so it won't change the head of aRef
+      struct node *curr = *aRef;
+      while (curr->next != NULL) {
+         curr = curr->next;
+      }
+      curr->next = *bRef;
+   }
+   *bRef = NULL;
+}
+
+void FrontBackSplit(struct node *src, struct node **fRef, struct node **bRef) {
+   int len = Length(src);
+
+   if (len < 2 ) {
+      *fRef = src;
+      *bRef = NULL;
+   } else {
+      int half = len/2;  // fRef will have #Nodes = half
+//      printf("half = %d\n", half);
+
+      *fRef = src;
+      while (half-1 > 0) {
+         // traverse with 'src' is fine because it was passed in by value
+         //    => same as a local variable
+         src = src->next;
+         half--;
+      }
+      *bRef = src->next;
+      src->next = NULL;
+   }
+}
+
+void Reverse(struct node** headRef) {
+   struct node *prev = NULL;
+   struct node *head = *headRef;
+   struct node *curr = head;
+
+   if (head == NULL || head->next == NULL)
+      return;
+
+   while (head != NULL) {
       head = head->next;
       curr->next = prev;
       prev = curr;
       curr = head;
    }
-   head->next = prev;
 
-   PrintList();
+   *headRef = prev;
 }
 
-void ReverseListRecursive(struct Node* p) {
-   if (p->next == NULL) {
-      head = p;
-   } else {
-      ReverseListRecursive(p->next);
-      p->next->next = p;
-      p->next = NULL;
+void RecursiveReverse(struct node **headRef) {
+   if (*headRef == NULL) {
+      return;
    }
-}
 
-struct Node* reverse2(struct Node* p) {
-   printf("push : ");
-   printf("  p: ");
-   PrintListRecursive(p);
+   struct node *head = *headRef;
+   struct node *rest = head->next;
 
-   if (p->next == NULL) {
-      return p;
-   } 
-   
-   struct Node* new_head = reverse2(p->next);
-   printf("pop: \n");
-   printf("  new_head : ");
-   PrintListRecursive(new_head);
-
-   printf("  old p: ");
-   PrintListRecursive(p);
-
-   p->next->next = p;
-   p->next = NULL;
-
-   printf("  new p: ");
-   PrintListRecursive(p);
-
-   return (new_head); // reversed list
-}
-
-struct Node* reverse3(struct Node *head, struct Node* prev) {
-   if (head->next == NULL) {
-      head->next = prev;
-      return head;
+   if (rest == NULL) {
+      return;
    }
-   struct Node* new_head = reverse3(head->next, head);
-   head->next = prev;
 
-   return new_head;
+   RecursiveReverse(&rest);
+
+   // Re-wind the 2nd->next to 1st and 1st->next to NULL
+   head->next->next = head;  // point original rest->next back to head
+   head->next = NULL;        // point head->next to NULL : head becomes tail
+
+   // Right now, rest is the updated new head
+   *headRef = rest;          // point updated new head to caller headRef
 }
 
-int main() {
-   head = NULL;
-   
-   printf("Hello!\n");
+int main(void) {
+   struct node *head = BuildOneTwoThree();
 
-   InsertNode(2, 1);  // List: 2
-   InsertNode(3, 2);  // List: 2, 3
-   InsertNode(4, 1);  // List: 4, 2, 3
-   InsertNode(5, 2);  // List: 4, 5, 2, 3
+   Print(head);
 
-//   printf("Calling PrintListRecursive(head): ");
-//   PrintListRecursive(head);
+   Push(&head, 5);
+   Print(head);
+   Push(&(head->next->next), 10);
+   Print(head);
 
-//   ReverseList();
-   printf("Let's reverse the list with recursion!\n");
-//   ReverseListRecursive(head); // ver 1 : reverse recursively + global head
-//   head = reverse2(head);      // ver 2 : reverse recursively (1 arg)
-   head = reverse3(head, NULL);  // ver 3 : reverse recursively (2 args)
+   int v = GetNth(head, 3);
+   printf("GetNth(head,3) = %d\n", v);
 
-   printf("Calling PrintListRecursive(head): ");
-   PrintListRecursive(head);
+   v = Pop(&head);
+   printf("Pop(&head) = %d\n", v);
+   Print(head);
 
-   printf("Calling PrintReversedListRecursive(head): ");
-   PrintReversedListRecursive(head); 
+   printf("InsertNth(&head, 3, 99): ");
+   InsertNth(&head, 3, 99);
+   Print(head);
 
-   printf("\n\n");
+   printf("InsertNth(&head, 0, 77): ");
+   InsertNth(&head, 0, 77);
+   Print(head);
 
-   ReverseList();
+   printf("SortedInsert(&head, newNode(4)): ");
+   struct node *newNode = (struct node*)malloc(sizeof(struct node));
+   newNode->data = 4;
+//   newNode->next = NULL;
+   SortedInsert(&head, newNode);
+   Print(head);
 
-   DeleteNode(2);     // List: 4, 5, 3
-   DeleteNode2(6);
-   DeleteNode(4);     // List: 5, 3
-   DeleteNode(3);     // List: 5
-   DeleteNode(5);     // List: 5
-   
+   printf("InsertSort(&head): ");
+   InsertSort(&head);
+   Print(head);
+
+   printf("DelelteList(head): ");
+   DeleteList(&head);
+   Print(head);
+
+   struct node *l1 = NULL;
+   struct node *l2 = NULL;
+   Push(&l1,2);
+   Push(&l1,1);
+   printf("l1: ");
+   Print(l1);
+
+   Push(&l2,4);
+   Push(&l2,3);
+   printf("l2: ");
+   Print(l2);
+
+   printf("Append:(&l1, &l2): ");
+   Append(&l1, &l2);
+   Print(l1);
+   Print(l2);
+   printf("Push(&l1, 5): ");
+   Push(&l1, 5);    
+   Print(l1);
+
+   printf("Reverse List: ");
+   Reverse(&l1);
+   Print(l1);
+
+   printf("FrontBackSplit(l1, &l1, &l2): \n");
+   FrontBackSplit(l1, &l1, &l2);
+   printf("  l1: ");
+   Print(l1);
+   printf("  l2: ");
+   Print(l2);
+
+   printf("RecursiveReverse l1 : ");
+   RecursiveReverse(&l1);
+   Print(l1);
+
+   printf("RecursiveReverse l2 : ");
+   RecursiveReverse(&l2);
+   Print(l2);
+
+   DeleteList(&l1);
+   DeleteList(&l2);
 }

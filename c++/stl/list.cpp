@@ -31,12 +31,19 @@ int main(void) {
    mylist.push_front(4); // mylist: { 4,5,2,9,6 }
    dump(mylist);
 
+   cout << "itr = find(mylist.begin(), mylist.end(), 2) then .insert(itr,8):\n";
    list<int>::iterator itr = find(mylist.begin(), mylist.end(), 2); // itr -> 2
    mylist.insert(itr,8); // mylist : {4,5,8,2,9,6 }
                          // O(1), faster than vector/deque
    dump(mylist);
+
+   cout << "itr++ then mylist.erase(itr):\n";
    itr++; // itr -> 9
    mylist.erase(itr);    // mylist : {4,8,5,2,6} : O(1)
+   dump(mylist);
+
+   cout << "mylist.remove(5):\n";
+   mylist.remove(5);
    dump(mylist);
 
    cout << "for loop with basic iterator: ";

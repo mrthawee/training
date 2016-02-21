@@ -59,7 +59,6 @@ int main() {
    // If 'B' doesn't define Print() as Virtual Function, B::Print() is invoked
    // If 'B' defines Print() as Virtual Function, D::Print() is invoked 
    ptrOb->Print();
-   // If 'B' doesn't define Print() as Virtual Function, B::Print() is invoked
 
    return 0;
 }

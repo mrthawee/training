@@ -36,8 +36,10 @@ int main()
    printf("*((*B)+1) = %d\n", *(*(B)+1));
    printf("(*(*B))+1 = %d\n", (*(*B))+1);
 
-   for(int i=0; i<2; i++)
-      for(int j=0; j<3; j++)
+   int i, j;
+
+   for(i=0; i<2; i++)
+      for(j=0; j<3; j++)
          printf(" B[%d][%d] = %d \n", i, j, B[i][j]);
  
    return 0;

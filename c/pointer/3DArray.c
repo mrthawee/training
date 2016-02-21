@@ -26,5 +26,5 @@ int main()
 
    int X[5][4];    // Can't call Func2DAryArg(X) - X is *[][4]
 
-   Func3DAryArg(C) // OK - C is *C[2][2] or C[][2][2]
+   Func3DAryArg(C); // OK - C is *C[2][2] or C[][2][2]
 }

@@ -63,14 +63,14 @@ void myPrintStr(char* c)
    int i=0;
    while (*(c+i) != '\0')
    {
-      printf("%c", c[i]);
+      printf("%c-", c[i]);
       i++;
    }
    printf("\n");
 
    while(*c != '\0')
    {
-      printf("%c", *c);
+      printf("%c#", *c);
       c++;
    }
    printf("\n");
@@ -103,7 +103,7 @@ int main()
    int size = sizeof(C);
    printf("C = %s\n", C);
    printf("   len of C = %d\n", len);
-   printf("   sizeof C = %d\n", size);
+   printf("   sizeof C = %d because we defined 'char C[%d]'\n", size, size);
 
    test();
    charPtrVsArray();

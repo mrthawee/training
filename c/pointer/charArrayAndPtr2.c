@@ -15,7 +15,8 @@ void print(char* c)
 
 int main()
 {
-   // char* C = "hello";  // -> string "hello" kept in TEXT/STATIC segment.
+   //char* C = "hello";  // -> string "hello" kept in TEXT/STATIC segment.
+   //char* C = "hello";  // -> string "hello" is a const
    char C[20] = "hello";  // -> string "hello" kept in STACK segment
    C[0] = 'A';            // This line works ONLY IF "hello" is in STACK segment
    print(C);

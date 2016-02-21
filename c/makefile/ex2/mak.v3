@@ -1,0 +1,13 @@
+# -c = generate the object file
+# -o $@ = put the output of the compilation in the file named on the left side of the :
+# $< = the first item in the dependencies list (hellomake.h)
+
+CC=gcc
+CFLAGS=-I.
+DEPS = hellomake.h
+
+%.o: %.c $(DEPS)
+	$(CC) -c -o $@ $< $(CFLAGS)
+
+hellomake: hellomake.o hellofunc.o
+	gcc -o hellomake hellomake.o hellofunc.o -I.

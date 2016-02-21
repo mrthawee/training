@@ -5,7 +5,10 @@ CC=cc
 CXX=CC
 CCFLAGS= -g -std=c99 -Wall -Werror -I.
 
-all: main test
+# => when running 'make' do these
+# 1. rule for hellomake = build ./hellomake
+# 2. rule for test = running ./hellomake
+all: hellomake test
 
 # Compile all .c files into .o files
 # % matches all (like * in a command)
@@ -13,11 +16,11 @@ all: main test
 %.o : %.c
 	$(CC) -c $(CCFLAGS) $<
 
-main: hellofunc.o hellomake.o
+hellomake: hellofunc.o hellomake.o
 	$(CC) -o hellomake hellofunc.o hellomake.o
 
-test: main
-	./main
+test: hellomake
+	./hellomake
 
 clean:
 	rm -f core *.o hellomake

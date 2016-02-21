@@ -1,0 +1,35 @@
+# -c = generate the object file
+# -o $@ = put the output of the compilation in the file named on the left side of the :
+# $< = the first item in the dependencies list (hellomake.h)
+# $@ = the left side of :
+# $^ = the right side of :
+
+IDIR = ../include
+CC=gcc
+CFLAGS=-I$(IDIR)
+
+ODIR = obj
+LDIR = ../lib
+
+LIBS = -lm
+
+_DEPS = hellomake.h
+DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
+
+_OBJ = hellomake.o hellofunc.o
+OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
+
+#%.o: %.c $(DEPS)
+$(ODIR)/%.0: %.c $(DEPS)
+	$(CC) -c -o $@ $< $(CFLAGS)
+
+#hellomake: hellomake.o hellofunc.o
+#	gcc -o hellomake hellomake.o hellofunc.o -I.
+
+hellomake: $(OBJ)
+	gcc -o $@ $^ $(CFLAGS) $(LIBS)
+
+.PHONY: clean
+
+clean:
+	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <bitset>
 
 using namespace std;
 
@@ -16,7 +17,8 @@ int main(void) {
 
    //while (in > 0) {
    for (int i=0; i<8; i++) {  // range of 8 bits
-      if (in % 2 == 0) {
+      //if (in % 2 == 0) {
+      if ((in & 1) == 0) {
          c0++;
       } else {
          c1++;

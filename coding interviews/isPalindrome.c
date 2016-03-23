@@ -35,7 +35,6 @@ int isStrPalindrome(char *str) {
 
 int main(void) {
 
-/*
    int x = 0;
 
    printf("Enter a number: ");
@@ -46,7 +45,6 @@ int main(void) {
    } else {
       printf("%d is not palindrome.\n", x);
    }
-*/
 
    char str[20] = "\0";
 

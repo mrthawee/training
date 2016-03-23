@@ -49,7 +49,7 @@ void PrintReversedListRecursive(struct Node* head) {
    posN : position n(th) to be inserted (start from 1)
 */
 void InsertNode(int data, int posN) {
-   struct Node* tmp = (struct Node*)malloc(sizeof(struct Node*));
+   struct Node* tmp = (struct Node*)malloc(sizeof(struct Node));
    // Node* tmp = new Node(); // in C++
 
    int i=0;

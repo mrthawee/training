@@ -1,3 +1,5 @@
+ex3: cmake to generate Makefile to create dynamic linked library (SHARED or .so on Ubuntu)
+
 ex3 is very similar to ex2 expect that mainapp.cpp is removed.
 Why? So these files will be built as a library
 

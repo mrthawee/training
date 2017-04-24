@@ -1,3 +1,5 @@
+ex2: cmake for files in include/ and src/ directories to create an executable (main() included)
+
 Here are the needed files and directories for this example
 
 .

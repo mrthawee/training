@@ -1,1 +1,9 @@
 training materials from http://derekmolloy.ie/hollo-world-introductions-to-cmake/
+
+NOTE: this training material is for Ubuntu environment
+
+ex1: Basic cmake to generate Makefile for one cpp file compilation
+ex2: cmake for files in include/ and src/ directories to create an executable (main() included)
+ex3: cmake to generate Makefile to create dynamic linked library (SHARED or .so on Ubuntu)
+ex4: cmake to generate Makefile to create static linked library (STATIC or .a on Ubuntu)
+ex5: cmake to generate Makefile for cpp with main() to link either static or dynamic linked library into create an executable

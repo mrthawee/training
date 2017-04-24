@@ -1,3 +1,5 @@
+ex4: cmake to generate Makefile to create static linked library (STATIC or .a on Ubuntu)
+
 ex4 is very, very similar to ex3 except one word in CMakeList.txt (SHARED->STATIC)
 
 .

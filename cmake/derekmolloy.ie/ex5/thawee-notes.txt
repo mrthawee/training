@@ -1,3 +1,5 @@
+ex5: cmake to generate Makefile for cpp with main() to link either static or dynamic linked library into create an executable
+
 ex5: using the shared or static library
 
 .

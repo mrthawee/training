@@ -1,0 +1,11 @@
+ex3 is very similar to ex2 expect that mainapp.cpp is removed.
+Why? So these files will be built as a library
+
+.
+|-- CMakeLists.txt
+|-- include
+|   \-- Student.h
+\-- src
+    |-- Student.cpp
+
+

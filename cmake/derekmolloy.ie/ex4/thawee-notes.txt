@@ -1,0 +1,8 @@
+ex4 is very, very similar to ex3 except one word in CMakeList.txt (SHARED->STATIC)
+
+.
+|-- CMakeLists.txt
+|-- include
+|   \-- Student.h
+|-- src
+    \-- Student.cpp

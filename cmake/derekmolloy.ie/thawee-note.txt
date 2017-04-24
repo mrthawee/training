@@ -1,0 +1,1 @@
+training materials from http://derekmolloy.ie/hollo-world-introductions-to-cmake/

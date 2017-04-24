@@ -1,0 +1,19 @@
+Here are the needed files and directories for this example
+
+.
+|-- CMakeLists.txt
+|-- include 
+|   \-- Student.h
+\-- src
+    |-- Student.cpp
+    \-- mainapp.cpp
+
+For better grouping off cmake generated files \build should be created
+Then, 
+cd build/
+cmake ..
+make
+
+rm -rf build/ will remove all generated files and executable testStudent
+
+NOTE:  if adding new source files, must run cmake again first

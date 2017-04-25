@@ -1,0 +1,21 @@
+my-ex: this is my own attempt to create CMakeLists for codes in 3 directories
+
+./src/ : C/C++ source files 
+./inc/ : C/C++ header files
+./utest/ : unit test code/files
+./build/ : where CMakeLists.txt is
+           - mkdir out under build/ first
+           - cd out
+           - cmake .. 
+           - now we got all generated files under build/out
+           - so we can remove all generated file by rm -rf out/
+.
+|-- inc
+|   \-- Student.h
+|-- src
+|   \-- Student.cpp
+|-- utest
+|   \-- libtest.cpp
+|-- build
+    \-- CMakeLists.txt
+

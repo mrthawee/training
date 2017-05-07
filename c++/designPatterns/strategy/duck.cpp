@@ -69,17 +69,19 @@ class Duck {
          delete quackBehavior;
       }
 
-// Thawee's note: I don't think there should be public method to change this
-//  * This is subjective to the scenario
-/*
+      // This "set" method allows sub-class to change its behavior as needed
       void setFlyBehavior(FlyBehavior *fb) {
+         // Don't forget to delete the old object first, otherwise memory leaks
+         delete flyBehavior;
          flyBehavior = fb;
       }
 
+      // This "set" method allows sub-class to change its behavior as needed
       void setQuackBehavior(QuackBehavior *qb) {
+         // Don't forget to delete the old object first, otherwise memory leaks
+         delete quackBehavior;
          quackBehavior = qb;
       }
-*/
 
       virtual void display() = 0;
 
@@ -118,6 +120,18 @@ class ModelDuck : public Duck {
          quackBehavior = new Quack();
       }
 
+      /*
+      void setFlyBehavior(FlyBehavior *fb) {
+         delete flyBehavior;
+         flyBehavior = fb;
+      }
+
+      void setQuackBehavior(QuackBehavior *qb) {
+         delete quackBehavior;
+         quackBehavior = qb;
+      }
+      */
+
       void display() {
          cout << "I'm a model duck.\n";
       }
@@ -147,6 +161,13 @@ class RedHeadDuck : public Duck {
       }
 };
 
+class FlyRocketPowered : public FlyBehavior {
+   public:
+      void fly() {
+         cout << "I'm ROCKET POWERED flying!!\n";
+      }
+};
+
 int main() {
    DecoyDuck decoy;
    cout << "DecoyDuck:\n";
@@ -158,6 +179,8 @@ int main() {
    ModelDuck model;
    cout << "ModelDuck:\n";
    model.performQuack();
+   model.performFly();
+   model.setFlyBehavior(new FlyRocketPowered());
    model.performFly();
    model.swim();
    cout << endl;
@@ -175,5 +198,7 @@ int main() {
    redhead.performFly();
    redhead.swim();
    cout << endl;
+
+   return 0;
 }
 

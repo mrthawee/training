@@ -53,21 +53,30 @@ class WeatherData : public Subject {
             (*itr)->update(temperature, humidity, pressure);
          }
       }
+
 /*   
+      // Function to do things then notify observer objects
       void measurementsChanged() {
          notifyObservers();
       }
 */
 
       void setMeasurements(double t, double h, double p) {
+         // Get info update
          temperature = t;
          humidity = h;
          pressure = p;
-//         measurementsChanged();
+
+         // Then nofiy each observer objects - push update
          notifyObservers();
+
+         // However if we need to do more than just notifying, define a function
+         // containing all of the things to do is better
+//         measurementsChanged();
       }
 
 /*
+      // These 'get' methods are needed if Observers will be pulling for update
       double getTemperature() {
          return temperature;
       }
@@ -85,18 +94,29 @@ class WeatherData : public Subject {
 // 1st Observer
 class CurrentConditionsDisplay : public Observer, DisplayElement {
    private:
+      
+      // Internal fields to hold the updated data
       double   temperature;
       double   humidity;
+
+      // Each Observer obj contains a reference the Subject,
+      // so it can register itself to
       Subject *weatherData;
+
+      // Reference to the Abstract Observer Object; not the concrete one
 //      WeatherData *weatherData;
 
    public:
       CurrentConditionsDisplay(Subject *weatherDataObj) {
 //      CurrentConditionsDisplay(WeatherData *weatherDataObj) {
          weatherData = weatherDataObj;
+
+         // Register itself to the Subject, so it can be notified
          weatherData->registerObserver(this);
       }
 
+      // Update() is Observer specific - define what it has to do to the 
+      // notified data
       void update(double t, double h, double p) {
          temperature = t;
          humidity = h;
@@ -191,6 +211,7 @@ int main() {
    StatisticsDisplay sd(&wd);
    ForecastDisplay fd(&wd);
 
+   // Simulating weather condition changes
    cout << endl << "1st update: " << endl;
    wd.setMeasurements(80, 65, 30.4f);
 

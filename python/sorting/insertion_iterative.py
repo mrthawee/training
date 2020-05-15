@@ -2,6 +2,12 @@ import random
 import sys
 import os
 
+'''
+worst case = O(n^2)
+average case = O(n^2)
+best case = O(n)
+'''
+
 def InsertionSort_Interative(A, n):
     cnt = 0
     if (n <= 1):
@@ -27,7 +33,7 @@ def InsertionSort_Interative(A, n):
             j -= 1
 
         # 'j+1' is where to insert val
-        A[j+1] = val
+        A[j+1] = val  # Thawee's note: j+1 because it was -1 at line 33
     print("len=%d  num comp=%d" % (n, cnt))
     return
 
